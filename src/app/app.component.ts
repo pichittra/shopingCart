@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import 'rxjs/add/operator/map';
+import { Subscription } from 'rxjs/Rx';
+declare var UIkit: any;
+export const uikit = UIkit;
 
 @Component({
   selector: 'app-root',
