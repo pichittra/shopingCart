@@ -35,23 +35,37 @@ export class HomeComponent implements OnInit {
   }
   addCart(product) {
 
-    if (this.cart.length != 0) {
-      for (let i = 0; i < this.cart.length; i++) {
-        //console.log(product)
-        if (this.cart[i].id != product.id) {
-          this.item = product
-          this.cart.push(this.item)
-        } else {
-          console.log("no")
-        }
-      }
+    //   if (this.cart.length != 0) {
+    //     for (let i = 0; i < this.cart.length; i++) {
+    //       //console.log(product)
+    //       if (this.cart[i].id != product.id) {
+    //         this.item = product
+    //         this.cart.push(this.item)
+    //       } else {
+    //         console.log("no")
+    //       }
+    //     }
 
+    //   } else {
+    //     this.item = product
+    //     this.cart.push(this.item)
+    //   }
+    //   console.log(this.cart)
+    // }
+    const index = this.cart.indexOf(product);
+   // const indexTotal = this.product.indexOf(product);
+    if (index !== -1) {
+      this.cart[index].quantity++;
+     // this.cart[index].total--;
     } else {
-      this.item = product
-      this.cart.push(this.item)
+      product.quantity = 1;
+      this.cart.push(product);
+    //  this.cart[index].total--;
     }
+    this.product[product.id-1].total--;
+  //  this.product[product.id].total--;
+    console.log()
     console.log(this.cart)
+
   }
-
-
 }
