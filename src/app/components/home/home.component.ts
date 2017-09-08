@@ -12,8 +12,7 @@ export class HomeComponent implements OnInit {
   product: any;
   item: any;
   cart: any = []
-  //countId = 0;
-  countItem = 0;
+  cal: any;
   constructor(private shopingCartService: ShopingCartService) {
     this.item = {
       id: 0,
@@ -24,48 +23,38 @@ export class HomeComponent implements OnInit {
       total: 0,
       out_of_stock: false
     }
-    console.log(this.item)
+    this.cal = { total: 0, prices: 0 }
   }
 
   ngOnInit() {
     this.shopingCartService.getProduct().subscribe(res => {
+      res.reduce(function(product,val,index){
+        if(val.out_of_stock == true){
+          val.total = 0
+        }
+        return product
+      },0)
       this.product = res;
-      //  console.log(this.product)
     })
   }
   addCart(product) {
 
-    //   if (this.cart.length != 0) {
-    //     for (let i = 0; i < this.cart.length; i++) {
-    //       //console.log(product)
-    //       if (this.cart[i].id != product.id) {
-    //         this.item = product
-    //         this.cart.push(this.item)
-    //       } else {
-    //         console.log("no")
-    //       }
-    //     }
-
-    //   } else {
-    //     this.item = product
-    //     this.cart.push(this.item)
-    //   }
-    //   console.log(this.cart)
-    // }
     const index = this.cart.indexOf(product);
-   // const indexTotal = this.product.indexOf(product);
     if (index !== -1) {
       this.cart[index].quantity++;
-     // this.cart[index].total--;
     } else {
       product.quantity = 1;
       this.cart.push(product);
-    //  this.cart[index].total--;
     }
-    this.product[product.id-1].total--;
-  //  this.product[product.id].total--;
-    console.log()
-    console.log(this.cart)
+    this.product[product.id - 1].total--;
 
+    this.cal = this.cart.reduce(function (cart, val, index, array) {
+      cart.total += val.quantity;
+      let price: number = Number(val.prices)
+      cart.prices += price* val.quantity;
+      (cart.prices).toFixed(2); //กำหนดทศนิยม 2 ตำแหน่ง
+      console.log(cart.prices)
+      return cart
+    }, { total: 0, prices: 0 })
   }
 }
