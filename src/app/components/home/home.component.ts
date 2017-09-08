@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   item: any;
   cart: any = []
   cal: any;
+  favorite: any;
   constructor(private shopingCartService: ShopingCartService,
     private router: Router) {
     this.item = {
@@ -24,8 +25,8 @@ export class HomeComponent implements OnInit {
       total: 0,
       out_of_stock: false
     }
-   
-   this.cal = this.shopingCartService.getCalculate();
+
+    this.cal = this.shopingCartService.getCalculate();
   }
 
   ngOnInit() {
@@ -38,12 +39,19 @@ export class HomeComponent implements OnInit {
       }, 0)
       this.product = res;
     })
-    //this.shopingCartService.getCalculate();
+    // this.shopingCartService.getFavorite().subscribe(res => {
+    //   this.favorite = res
+    // });
   }
   listCart(item) {
     this.router.navigate([`/cart`]);
   }
   addCart(product) {
     this.cal = this.shopingCartService.addCart(product);
-}
+  }
+  addFavorite(item) {
+    this.shopingCartService.addFavorite(item.id).subscribe(res => {
+      this.favorite = res
+    });
+  }
 }

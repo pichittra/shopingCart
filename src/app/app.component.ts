@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { Subscription } from 'rxjs/Rx';
+import 'rxjs/add/observable/forkJoin';
+import { Subscription} from 'rxjs/Rx';
 declare var UIkit: any;
 export const uikit = UIkit;
 
