@@ -6,11 +6,26 @@
           <th>Quntity</th>
       </tr>
   </thead>
+  <tfoot>
+    <tr>
+        <td></td>
+        <td> {{cal?.prices}} </td>
+        <td>{{cal?.total}}</td>
+    </tr>
+  </tfoot>
+  <!-- <tfoot>
+    <tr>
+        <td>aa</td>
+        <td>bb</td>
+        <td>cc</td>
+    </tr>
+</tfoot> -->
   <tbody *ngFor="let item of cart">
       <tr>
           <td> {{item.name}} </td>
-          <td>Table Data</td>
-          <td>Table Data</td>
+          <td> {{item.prices}} </td>
+          <td>{{item.quantity}}</td>
       </tr>
   </tbody>
+ 
 </table>

@@ -24,8 +24,8 @@ export class HomeComponent implements OnInit {
       total: 0,
       out_of_stock: false
     }
-    this.cal = { total: 0, prices: 0 };
-    (this.cal.prices).toFixed(2);
+   
+   this.cal = this.shopingCartService.getCalculate();
   }
 
   ngOnInit() {
@@ -38,26 +38,12 @@ export class HomeComponent implements OnInit {
       }, 0)
       this.product = res;
     })
+    //this.shopingCartService.getCalculate();
   }
   listCart(item) {
     this.router.navigate([`/cart`]);
   }
   addCart(product) {
-
-    const index = this.cart.indexOf(product);
-    if (index !== -1) {
-      this.cart[index].quantity++;
-    } else {
-      product.quantity = 1;
-      this.cart.push(product);
-    }
-    this.product[product.id - 1].total--;
-
-    this.cal = this.cart.reduce(function (cart, val, index, array) {
-      cart.total += val.quantity;
-      let price: number = Number(val.prices)
-      cart.prices += price * val.quantity;
-      return cart
-    }, { total: 0, prices: 0 })
-  }
+    this.cal = this.shopingCartService.addCart(product);
+}
 }

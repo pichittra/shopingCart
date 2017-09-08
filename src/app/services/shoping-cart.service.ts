@@ -4,16 +4,44 @@ import { Http, Response, Request } from '@angular/http';
 
 @Injectable()
 export class ShopingCartService {
-  constructor(private http: Http) { }
+  cart: any = []
+  cal: any;
+  constructor(private http: Http) {
+    this.cal = { total: 0, prices: 0};
+    console.log(this.cal)
+  }
 
   getProduct(): Observable<any> {
     return this.http.get
-    (`http://www.mocky.io/v2/59b0d4e6260000d501287d57`)
-    .map((res: Response) => res.json());
+      (`http://www.mocky.io/v2/59b0d4e6260000d501287d57`)
+      .map((res: Response) => res.json());
   }
-//  getCart(): Observable<any> {
-//     return this.http.get
-//     (`http://www.mocky.io/v2/59b0d4e6260000d501287d57` , {item : product})
-//     .map((res: Response) => res.json());
-//   }
+  addCart(product): Observable<any> {
+    const index = this.cart.indexOf(product);
+    if (index !== -1) {
+      this.cart[index].quantity++;
+    //  this.cart[index].prices = product.prices * product.quantity;
+    } else {
+      product.quantity = 1;
+      this.cart.push(product);
+    }
+    product.total--;
+    this.cal = this.cart.reduce(function (cart, val, index, array) {
+      cart.total += val.quantity;
+      let price: number = Number(val.prices)
+      cart.prices += price * val.quantity;
+      // cart.quantity++;
+      // console.log(cart.quantity)
+      return cart
+    }, { total: 0, prices: 0})
+     return this.cal
+  }
+
+  getCart() : Observable<any>{
+    return this.cart;
+  }
+  getCalculate() {
+    //console.log(this.cal)
+    return this.cal;
+  }
 }
