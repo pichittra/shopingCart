@@ -1,6 +1,7 @@
 <nav class="uk-navbar-container" uk-navbar>
   <div class="uk-navbar-right">
     <a href="" uk-icon="icon: cart">Cart<i class="uk-icon-shopping-cart"></i> {{cal.total}} Price : {{cal.prices}}</a>
+    <button class="uk-button uk-button-primary" (click)="listCart(cart)" type="button">Show Cart</button>
   </div>
 </nav>
 
@@ -10,7 +11,7 @@
       <img class="size" src="{{item.image}}">
       <p>name : {{item.name}}
         <a *ngIf="item.total != 0" href="javascript:void(0);" uk-icon="icon: cart" (click)="addCart(item)"></a>
-        <a *ngIf="item.total == 0" href="javascript:void(0);" uk-icon="icon: cart" class="uk-alert uk-alert-danger" ></a>
+        <a *ngIf="item.total == 0" href="javascript:void(0);" uk-icon="icon: cart" class="uk-alert uk-alert-danger"></a>
       </p>
       <p>prices : {{item.prices}} </p>
       <p *ngIf="item.total != 0">total : {{item.total}} </p>

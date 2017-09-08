@@ -13,7 +13,8 @@ export class HomeComponent implements OnInit {
   item: any;
   cart: any = []
   cal: any;
-  constructor(private shopingCartService: ShopingCartService) {
+  constructor(private shopingCartService: ShopingCartService,
+    private router: Router) {
     this.item = {
       id: 0,
       name: "",
@@ -23,19 +24,23 @@ export class HomeComponent implements OnInit {
       total: 0,
       out_of_stock: false
     }
-    this.cal = { total: 0, prices: 0 }
+    this.cal = { total: 0, prices: 0 };
+    (this.cal.prices).toFixed(2);
   }
 
   ngOnInit() {
     this.shopingCartService.getProduct().subscribe(res => {
-      res.reduce(function(product,val,index){
-        if(val.out_of_stock == true){
+      res.reduce(function (product, val, index) {
+        if (val.out_of_stock == true) {
           val.total = 0
         }
         return product
-      },0)
+      }, 0)
       this.product = res;
     })
+  }
+  listCart(item) {
+    this.router.navigate([`/cart`]);
   }
   addCart(product) {
 
@@ -51,9 +56,7 @@ export class HomeComponent implements OnInit {
     this.cal = this.cart.reduce(function (cart, val, index, array) {
       cart.total += val.quantity;
       let price: number = Number(val.prices)
-      cart.prices += price* val.quantity;
-      (cart.prices).toFixed(2); //กำหนดทศนิยม 2 ตำแหน่ง
-      console.log(cart.prices)
+      cart.prices += price * val.quantity;
       return cart
     }, { total: 0, prices: 0 })
   }
