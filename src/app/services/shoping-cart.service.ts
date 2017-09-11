@@ -15,8 +15,7 @@ export class ShopingCartService {
    this.join = Observable.forkJoin(
      this.getProduct(),
      this.getFavorite()
-    )
- 
+    ) 
       //console.log(this.favorite)
     // res.map(function(currentValue,index,res){
     //   console.log(currentValue)
@@ -29,12 +28,12 @@ export class ShopingCartService {
       .map((res: Response) => res.json());
   }
   addFavorite(id): Observable<any> {
-    return this.http.post
+    return this.product = this.http.post
     (`http://localhost:3000/favorite`, { pId: id })
     .map((res: Response) => res.json());
   }
   getFavorite(): Observable<any> {
-    return this.http.get
+    return this.product = this.http.get
       (`http://localhost:3000/favorite`)
       .map((res: Response) => res.json());
   }
