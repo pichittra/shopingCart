@@ -28,26 +28,37 @@ export class HomeComponent implements OnInit {
       this.product = res;
     })
 
-  //  this.product = this.shopingCartService.getFavorite();
+    //  this.product = this.shopingCartService.getFavorite();
     //console.log(this.product)
-   // this.product = this.shopingCartService;
+    // this.product = this.shopingCartService;
     //  this.product.filter(item => item.id == this.favorite.id)
   }
 
   ngOnInit() {
-//     this.product = this.shopingCartService.changeFavoriteView();
-// console.log("aa")
-   this.shopingCartService.join.subscribe(res => {
-      for (let i = 0; i < res[0].length; i++) {
-        for (let j = 0; j < res[1].length; j++) {
-          if (res[1][j].pId == res[0][i].id) {
-            if (this.product[i].favorite != true) {
-              this.product[i].favorite = true;
-            //  this.product = res
-            }
-          }
-        }
-      }
+    //     this.product = this.shopingCartService.changeFavoriteView();
+    // console.log("aa")
+    this.shopingCartService.join.subscribe(res => {
+
+      // for (let i = 0; i < res[0].length; i++) {
+      //   for (let j = 0; j < res[1].length; j++) {
+      //     if (res[1][j].pId == res[0][i].id) {
+      //       if (this.product[i].favorite != true) {
+      //         this.product[i].favorite = true;
+      //       //  this.product = res
+      //       }
+      //     }
+      //   }
+      // }
+
+      res[0].map(function (currentValue) {
+
+        const findId = res[1].find(function (item) {
+          return item.id == currentValue.id;
+        })
+        // currentValue.favorite = true;
+        // console.log(currentValue)
+       // return currentValue
+      })
 
     })
 
@@ -59,7 +70,7 @@ export class HomeComponent implements OnInit {
     this.cal = this.shopingCartService.addCart(product);
   }
   addFavorite(item) {
-   this.shopingCartService.addFavorite(item.id).subscribe(res => {
+    this.shopingCartService.addFavorite(item.id).subscribe(res => {
       item.favorite = true;
     });
   }
