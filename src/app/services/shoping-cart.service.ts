@@ -8,20 +8,20 @@ export class ShopingCartService {
   cart: any = []
   cal: any;
   favorite: any;
+  product: any;
+  join: any;
   constructor(private http: Http) {
     this.cal = { total: 0, prices: 0 };
-    // this.getFavorite().subscribe(res => {
-    //   this.favorite = res
-    //  // console.log(this.favorite)
-    // });
-    const join = Observable.forkJoin(
+   this.join = Observable.forkJoin(
      this.getProduct(),
      this.getFavorite()
     )
-    join.subscribe(res => {
-      this.favorite = res
-      console.log(this.favorite)
-    })
+ 
+      //console.log(this.favorite)
+    // res.map(function(currentValue,index,res){
+    //   console.log(currentValue)
+    //   console.log(index)
+    // })
   }
   getProduct(): Observable<any> {
     return this.http.get
@@ -29,11 +29,6 @@ export class ShopingCartService {
       .map((res: Response) => res.json());
   }
   addFavorite(id): Observable<any> {
-    // id = this.favorite.find(function(id){
-    //   return this.favorite.id != id
-    // })
-    // console.log(id)
-    // return id
     return this.http.post
     (`http://localhost:3000/favorite`, { pId: id })
     .map((res: Response) => res.json());
@@ -47,7 +42,6 @@ export class ShopingCartService {
     const index = this.cart.indexOf(product);
     if (index !== -1) {
       this.cart[index].quantity++;
-      //  this.cart[index].prices = product.prices * product.quantity;
     } else {
       product.quantity = 1;
       this.cart.push(product);
@@ -57,8 +51,6 @@ export class ShopingCartService {
       cart.total += val.quantity;
       let price: number = Number(val.prices)
       cart.prices += price * val.quantity;
-      // cart.quantity++;
-      // console.log(cart.quantity)
       return cart
     }, { total: 0, prices: 0 })
     return this.cal
@@ -68,7 +60,6 @@ export class ShopingCartService {
     return this.cart;
   }
   getCalculate() {
-    //console.log(this.cal)
     return this.cal;
   }
 }

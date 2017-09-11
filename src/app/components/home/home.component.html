@@ -9,7 +9,10 @@
   <div *ngFor="let item of product">
 
     <div class="uk-text-center uk-transform-origin-bottom-right uk-card uk-card-default uk-card-body uk-animation-scale-up">
-      <div class="uk-text-right">
+      <div class="uk-text-right" *ngIf="item.favorite == true"> 
+        <a href="javascript:void(0);" style="background-color:yellow" uk-icon="icon: star" (click)="addFavorite(item)"></a>
+      </div>
+      <div class="uk-text-right" *ngIf="item.favorite != true"> 
         <a href="javascript:void(0);" uk-icon="icon: star" (click)="addFavorite(item)"></a>
       </div>
 
