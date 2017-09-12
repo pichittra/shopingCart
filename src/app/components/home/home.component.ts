@@ -13,32 +13,22 @@ export class HomeComponent implements OnInit {
   item: any;
   cart: any = []
   cal: any;
-  favorite: any;
-  star: any;
+
   constructor(private shopingCartService: ShopingCartService,
     private router: Router) {
     this.cal = this.shopingCartService.getCalculate();
-    this.shopingCartService.getProduct().subscribe(res => {
-      res.reduce(function (product, val, index) {
-        if (val.out_of_stock == true) {
-          val.total = 0
-        }
-        return product
-      }, 0)
-      this.product = res;
-    })
-
-    //  this.product = this.shopingCartService.getFavorite();
-    //console.log(this.product)
-    // this.product = this.shopingCartService;
-    //  this.product.filter(item => item.id == this.favorite.id)
+     //   res.reduce(function (product, val, index) {
+    //     if (val.out_of_stock == true) {
+    //       val.total = 0
+    //     }
+    //     return product
+    //   }, 0)
+    //   this.product = res;
+    // })
   }
 
   ngOnInit() {
-    //     this.product = this.shopingCartService.changeFavoriteView();
-    // console.log("aa")
     this.shopingCartService.join.subscribe(res => {
-
       // for (let i = 0; i < res[0].length; i++) {
       //   for (let j = 0; j < res[1].length; j++) {
       //     if (res[1][j].pId == res[0][i].id) {
@@ -49,17 +39,22 @@ export class HomeComponent implements OnInit {
       //     }
       //   }
       // }
+        this.product =  res[0].map(function (currentValue) {
 
-      res[0].map(function (currentValue) {
-
-        const findId = res[1].find(function (item) {
-          return item.id == currentValue.id;
+          if(currentValue.out_of_stock == true){
+            currentValue.total = 0;
+          }
+          //findId คือ ให้ return ตัวที่ id ตรงกัน
+          const findId = res[1].find(function (item) {
+            return item.pId == currentValue.id;
+          })
+            if (findId) { // เช็คว่ามีค่าไหม
+              currentValue.favorite = true;
+            }else{
+              currentValue.favorite = false;
+            }
+            return currentValue
         })
-        // currentValue.favorite = true;
-        // console.log(currentValue)
-       // return currentValue
-      })
-
     })
 
   }
