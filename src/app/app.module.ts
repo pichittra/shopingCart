@@ -9,6 +9,7 @@ import { Http, HttpModule } from '@angular/http';
 import { ShowCartComponent } from './components/show-cart/show-cart.component';
 import { RouterLink } from '@angular/router';
 import { FavoriteComponent } from './components/favorite/favorite.component';
+import { TestService } from './services/test.service';
 const routes: Routes = [
   {
     path: '',
@@ -38,7 +39,7 @@ const routes: Routes = [
     HttpModule
   ],
   exports: [RouterModule],
-  providers: [ShopingCartService],
+  providers: [ShopingCartService,TestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

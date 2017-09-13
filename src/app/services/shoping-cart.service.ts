@@ -16,11 +16,6 @@ export class ShopingCartService {
      this.getProduct(),
      this.getFavorite()
     ) 
-      //console.log(this.favorite)
-    // res.map(function(currentValue,index,res){
-    //   console.log(currentValue)
-    //   console.log(index)
-    // })
   }
   getProduct(): Observable<any> {
     return this.http.get

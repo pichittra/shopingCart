@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ShopingCartService } from '../../services/shoping-cart.service'
+import { ShopingCartService } from '../../services/shoping-cart.service';
 import { RouterModule, Router } from '@angular/router';
-
+import { TestService } from '../../services/test.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -13,21 +13,17 @@ export class HomeComponent implements OnInit {
   item: any;
   cart: any = []
   cal: any;
+  test: any;
 
   constructor(private shopingCartService: ShopingCartService,
+    private testService : TestService,
     private router: Router) {
     this.cal = this.shopingCartService.getCalculate();
-     //   res.reduce(function (product, val, index) {
-    //     if (val.out_of_stock == true) {
-    //       val.total = 0
-    //     }
-    //     return product
-    //   }, 0)
-    //   this.product = res;
-    // })
+    this.test = this.testService;
   }
 
   ngOnInit() {
+ 
     this.shopingCartService.join.subscribe(res => {
       // for (let i = 0; i < res[0].length; i++) {
       //   for (let j = 0; j < res[1].length; j++) {
@@ -40,7 +36,6 @@ export class HomeComponent implements OnInit {
       //   }
       // }
         this.product =  res[0].map(function (currentValue) {
-
           if(currentValue.out_of_stock == true){
             currentValue.total = 0;
           }
